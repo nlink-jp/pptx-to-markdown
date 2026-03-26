@@ -1,94 +1,98 @@
 # pptx-to-markdown
 
-`.pptx` ファイルを構造化された Markdown に変換する CLI ツールです。プレゼン資料・社内資料を LLM による分析にかけるための前処理用途を想定しています。
+A CLI tool that converts `.pptx` files to structured Markdown. Designed as a preprocessing step for LLM-based analysis of presentation and internal documents.
 
-## 特徴
+[日本語版 README はこちら](README.ja.md)
 
-- スライドのテキスト・箇条書き階層を Markdown に変換
-- テーブルを Markdown テーブルとして出力
-- 画像を base64 データ URI として埋め込み
-- チャートのデータをテーブルとして抽出
-- 発表者ノートをセクションとして出力
+## Features
 
-## 必要環境
+- Converts slide text and bullet hierarchies to Markdown
+- Renders tables as Markdown tables
+- Embeds images as base64 data URIs
+- Extracts chart data as Markdown tables
+- Outputs speaker notes as a separate section per slide
 
-- Python 3.11 以上
+## Requirements
+
+- Python 3.11 or later
 - [uv](https://docs.astral.sh/uv/)
 
-## インストール
+## Installation
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/magifd2/pptx-to-markdown.git
 cd pptx-to-markdown
 uv sync
 ```
 
-## 使い方
+## Usage
 
 ```bash
-# stdout に出力
+# Output to stdout
 uv run pptx2md input.pptx
 
-# ファイルに出力
+# Output to file
 uv run pptx2md input.pptx -o output.md
 
-# 画像を省略（プレースホルダに置き換え）
+# Omit images (replaced with placeholders)
 uv run pptx2md input.pptx --no-images
 
-# 発表者ノートを省略
+# Omit speaker notes
 uv run pptx2md input.pptx --no-notes
 
-# チャートデータを省略
+# Omit chart data
 uv run pptx2md input.pptx --no-charts
 ```
 
-## 出力形式
+## Output Format
 
 ```markdown
-# スライド 1: タイトル
+# スライド 1: Slide Title
 
-本文テキスト
+- Bullet point
+  - Nested bullet
 
-- 箇条書き
-  - ネスト
+| Col A | Col B |
+| --- | --- |
+| val 1 | val 2 |
 
-| 列A | 列B |
-|-----|-----|
-| 値1 | 値2 |
-
-<!-- チャート: 棒グラフ -->
-| カテゴリ | シリーズ1 |
-|----------|-----------|
-| 項目A    | 10        |
+<!-- チャート: COLUMN_CLUSTERED -->
+| カテゴリ | Series1 |
+| --- | --- |
+| Item A | 10 |
 
 ![スライド1_画像1](data:image/png;base64,...)
 
 ## ノート
 
-発表者ノート
+Speaker notes text
 
 ---
+
+# スライド 2: Next Slide
 ```
 
-## 開発
+Chart type names follow python-pptx's `XL_CHART_TYPE` enum (e.g. `COLUMN_CLUSTERED`, `BAR_CLUSTERED`, `LINE`, `PIE`).
+
+## Development
 
 ```bash
-# 依存関係インストール
+# Install dependencies (including dev)
 uv sync
 
-# テスト実行
+# Run tests
 uv run pytest
 
-# カバレッジ付きテスト
+# Run tests with coverage
 uv run pytest --cov=pptx_to_markdown
 ```
 
-## 制限事項
+## Limitations
 
-- `.ppt`（旧形式）は非対応
-- アニメーション・トランジション情報は変換対象外
-- 複雑なレイアウト（重なり合った図形等）はテキスト抽出のみ
+- `.ppt` (legacy format) is not supported
+- Animation and transition data are not converted
+- Shapes inside group shapes are not processed
 
-## ライセンス
+## License
 
-MIT
+MIT © magifd2
