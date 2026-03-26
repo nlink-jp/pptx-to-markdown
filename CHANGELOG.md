@@ -11,3 +11,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Initial project setup (pyproject.toml, directory structure, documentation)
 - `extractors/text.py`: `extract_text_frame` (bullet hierarchy), `extract_title` (plain text), `extract_notes` (speaker notes)
 - `extractors/table.py`: `extract_table` converts table shapes to Markdown tables (pipe-escaped cells, newline collapsing)
+- `extractors/image.py`: `extract_image` embeds pictures as base64 data URIs; `image_placeholder` for disabled-image mode
