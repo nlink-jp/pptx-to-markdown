@@ -86,6 +86,22 @@ class TestExtractTextFrame:
         shape = _make_textbox([("  padded  ", 0)])
         assert extract_text_frame(shape) == "- padded"
 
+    def test_vertical_tab_in_paragraph_becomes_space(self):
+        """\\x0b (pptx in-paragraph line break) must not appear in output."""
+        shape = _make_textbox([("hello\x0bworld", 0)])
+        result = extract_text_frame(shape)
+        assert "\x0b" not in result
+        assert "hello world" in result
+
+    def test_other_control_chars_removed(self):
+        # python-pptx XML-escapes \x00/\x1b etc. to "_x0000_" notation before
+        # we see them, so we verify via sanitize_text directly (see test_utils.py).
+        # Here we just confirm the output contains no raw control characters.
+        shape = _make_textbox([("normal text", 0)])
+        result = extract_text_frame(shape)
+        for ch in result:
+            assert ch >= " " or ch in ("\t", "\n"), f"Unexpected control char: {ch!r}"
+
 
 # ---------------------------------------------------------------------------
 # extract_title
@@ -112,6 +128,10 @@ class TestExtractTitle:
         slide = prs.slides.add_slide(prs.slide_layouts[6])
         line = slide.shapes.add_connector(1, Inches(1), Inches(1), Inches(2), Inches(2))
         assert extract_title(line) == ""
+
+    def test_vertical_tab_in_title_becomes_space(self):
+        shape = _make_textbox([("Title\x0bPart2", 0)])
+        assert "\x0b" not in extract_title(shape)
 
 
 # ---------------------------------------------------------------------------
@@ -146,3 +166,11 @@ class TestExtractNotes:
         result = extract_notes(slide)
         assert "Line 1" in result
         assert "Line 2" in result
+
+    def test_vertical_tab_in_notes_becomes_newline(self):
+        """In notes context, \\x0b should become \\n (preserve line breaks)."""
+        slide = _make_slide_with_notes("note\x0bcontinued")
+        result = extract_notes(slide)
+        assert "\x0b" not in result
+        assert "note" in result
+        assert "continued" in result

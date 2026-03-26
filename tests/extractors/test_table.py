@@ -105,3 +105,17 @@ class TestExtractTable:
         result = extract_table(shape)
         separator = result.splitlines()[1]
         assert separator.count("---") == 4
+
+    def test_vertical_tab_in_cells_becomes_space(self):
+        """\\x0b (pptx in-cell line break) must not appear in output."""
+        shape = _make_table_shape([
+            ["Header"],
+            ["cell\x0bcontent"],
+        ])
+        result = extract_table(shape)
+        assert "\x0b" not in result
+        assert "cell content" in result
+
+    def test_other_control_chars_in_cells_removed(self):
+        shape = _make_table_shape([["ok\x00val"]])
+        assert "\x00" not in extract_table(shape)

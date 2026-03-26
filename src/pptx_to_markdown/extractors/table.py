@@ -1,9 +1,15 @@
 """Extract table shapes from pptx to Markdown tables."""
 
+from ..utils import sanitize_text
+
 
 def _sanitize_cell(text: str) -> str:
-    """Prepare cell text for Markdown: strip, escape pipes, flatten newlines."""
-    return text.strip().replace("\n", " ").replace("|", "\\|")
+    """Prepare cell text for Markdown: sanitize control chars, strip, escape pipes.
+
+    Both \\x0b (pptx line break) and \\n (paragraph break) are collapsed to a
+    single space so the cell stays on one line.
+    """
+    return sanitize_text(text, line_break=" ").replace("\n", " ").strip().replace("|", "\\|")
 
 
 def extract_table(shape) -> str:
@@ -11,7 +17,8 @@ def extract_table(shape) -> str:
 
     The first row is treated as the header row; a separator line is
     inserted after it. Pipe characters inside cells are escaped as \\|.
-    Newlines inside cells are collapsed to a single space.
+    Newlines and pptx line-break characters inside cells are collapsed to a
+    single space.
 
     Assumes shape.has_table is True.
     Returns an empty string if the table has no rows.

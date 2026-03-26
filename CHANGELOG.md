@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- Control characters (especially `\x0b` / pptx in-paragraph line break) in extracted text now sanitized:
+  - `\x0b` → space in bullet text, titles, and table cells
+  - `\x0b` → newline in speaker notes (preserves line structure)
+  - Other C0/C1 control characters (NUL, ESC, DEL, etc.) are stripped
+
 ## [0.1.0] - 2026-03-26
 
 ### Added

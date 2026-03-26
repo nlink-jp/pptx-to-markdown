@@ -1,5 +1,7 @@
 """Extract text frames and bullet hierarchies from pptx shapes."""
 
+from ..utils import sanitize_text
+
 
 def extract_text_frame(shape) -> str:
     """Convert a shape's text frame to Markdown bullet list.
@@ -17,7 +19,7 @@ def extract_text_frame(shape) -> str:
 
     lines = []
     for para in shape.text_frame.paragraphs:
-        text = para.text.strip()
+        text = sanitize_text(para.text, line_break=" ").strip()
         if not text:
             continue
         indent = "  " * para.level
@@ -34,7 +36,7 @@ def extract_title(shape) -> str:
     """
     if not shape.has_text_frame:
         return ""
-    return shape.text_frame.text.strip()
+    return sanitize_text(shape.text_frame.text, line_break=" ").strip()
 
 
 def extract_notes(slide) -> str:
@@ -44,4 +46,4 @@ def extract_notes(slide) -> str:
     """
     if not slide.has_notes_slide:
         return ""
-    return slide.notes_slide.notes_text_frame.text.strip()
+    return sanitize_text(slide.notes_slide.notes_text_frame.text, line_break="\n").strip()

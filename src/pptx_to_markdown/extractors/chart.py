@@ -2,6 +2,8 @@
 
 from pptx.oxml.ns import qn
 
+from ..utils import sanitize_text
+
 
 def _get_series_categories(series) -> list[str]:
     """Return the category labels for a series by reading its XML.
@@ -17,7 +19,7 @@ def _get_series_categories(series) -> list[str]:
         cache = cat_elem.find(f".//{cache_tag}")
         if cache is not None:
             return [
-                (pt.find(qn("c:v")).text or "")
+                sanitize_text(pt.find(qn("c:v")).text or "", line_break=" ")
                 for pt in cache.findall(qn("c:pt"))
                 if pt.find(qn("c:v")) is not None
             ]
@@ -56,7 +58,10 @@ def extract_chart(shape) -> str:
         return comment
 
     categories = _get_series_categories(series_list[0])
-    series_names = [s.name or f"シリーズ{i + 1}" for i, s in enumerate(series_list)]
+    series_names = [
+        sanitize_text(s.name or f"シリーズ{i + 1}", line_break=" ")
+        for i, s in enumerate(series_list)
+    ]
 
     header_cells = (["カテゴリ"] if categories else []) + series_names
     header = "| " + " | ".join(header_cells) + " |"
