@@ -7,11 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-03-28
+
 ### Fixed
 - Control characters (especially `\x0b` / pptx in-paragraph line break) in extracted text now sanitized:
   - `\x0b` → space in bullet text, titles, and table cells
   - `\x0b` → newline in speaker notes (preserves line structure)
   - Other C0/C1 control characters (NUL, ESC, DEL, etc.) are stripped
+
+### Changed
+- Migrated to nlink-jp organisation; added `[project.urls]` to `pyproject.toml`
 
 ## [0.1.0] - 2026-03-26
 
@@ -27,5 +32,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - English README and Japanese README (README.ja.md)
 - 65 unit and integration tests
 
-[Unreleased]: https://github.com/magifd2/pptx-to-markdown/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/magifd2/pptx-to-markdown/releases/tag/v0.1.0
+[Unreleased]: https://github.com/nlink-jp/pptx-to-markdown/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/nlink-jp/pptx-to-markdown/compare/v0.1.0...v0.1.1
+[0.1.0]: https://github.com/nlink-jp/pptx-to-markdown/releases/tag/v0.1.0
