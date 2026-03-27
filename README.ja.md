@@ -2,6 +2,8 @@
 
 `.pptx` ファイルを構造化された Markdown に変換する CLI ツールです。プレゼン資料・社内資料を LLM による分析にかけるための前処理用途を想定しています。
 
+[English README is here](README.md)
+
 ## 特徴
 
 - スライドのテキスト・箇条書き階層を Markdown に変換
@@ -10,15 +12,12 @@
 - チャートのデータをテーブルとして抽出
 - 発表者ノートをセクションとして出力
 
-## 必要環境
-
-- Python 3.11 以上
-- [uv](https://docs.astral.sh/uv/)
-
 ## インストール
 
+**前提条件:** Python 3.11 以上と [uv](https://docs.astral.sh/uv/) が必要です。
+
 ```bash
-git clone https://github.com/magifd2/pptx-to-markdown.git
+git clone https://github.com/nlink-jp/pptx-to-markdown.git
 cd pptx-to-markdown
 uv sync
 ```
@@ -42,7 +41,7 @@ uv run pptx2md input.pptx --no-notes
 uv run pptx2md input.pptx --no-charts
 ```
 
-## 出力形式
+### 出力形式
 
 ```markdown
 # スライド 1: タイトル
@@ -72,10 +71,10 @@ uv run pptx2md input.pptx --no-charts
 
 チャートコメントのタイプ名は python-pptx の `XL_CHART_TYPE` 列挙名（例: `COLUMN_CLUSTERED`, `BAR_CLUSTERED`, `LINE`, `PIE`）です。
 
-## 開発
+## ビルド
 
 ```bash
-# 依存関係インストール
+# 依存関係インストール（dev含む）
 uv sync
 
 # テスト実行

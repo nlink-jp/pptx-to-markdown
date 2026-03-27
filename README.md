@@ -12,15 +12,12 @@ A CLI tool that converts `.pptx` files to structured Markdown. Designed as a pre
 - Extracts chart data as Markdown tables
 - Outputs speaker notes as a separate section per slide
 
-## Requirements
-
-- Python 3.11 or later
-- [uv](https://docs.astral.sh/uv/)
-
 ## Installation
 
+**Prerequisites:** Python 3.11 or later and [uv](https://docs.astral.sh/uv/).
+
 ```bash
-git clone https://github.com/magifd2/pptx-to-markdown.git
+git clone https://github.com/nlink-jp/pptx-to-markdown.git
 cd pptx-to-markdown
 uv sync
 ```
@@ -44,7 +41,7 @@ uv run pptx2md input.pptx --no-notes
 uv run pptx2md input.pptx --no-charts
 ```
 
-## Output Format
+### Output Format
 
 ```markdown
 # スライド 1: Slide Title
@@ -74,7 +71,7 @@ Speaker notes text
 
 Chart type names follow python-pptx's `XL_CHART_TYPE` enum (e.g. `COLUMN_CLUSTERED`, `BAR_CLUSTERED`, `LINE`, `PIE`).
 
-## Development
+## Building
 
 ```bash
 # Install dependencies (including dev)
