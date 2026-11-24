@@ -22,7 +22,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 uv sync
 
 # Run all tests
-uv run pytest
+make test   # or: uv run pytest
 
 # Run a single test file
 uv run pytest tests/extractors/test_text.py
@@ -32,6 +32,9 @@ uv run pytest tests/extractors/test_text.py::test_extract_title
 
 # Run with coverage
 uv run pytest --cov=pptx_to_markdown
+
+# Known advisories in the locked dependencies (run before tagging)
+make vuln
 
 # Run the CLI
 uv run pptx2md input.pptx

@@ -14,6 +14,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   has none. This affects environments made with `uv sync` from the
   repository.
 
+### Changed
+
+- A `Makefile` with `test` and `vuln` (`uv audit` on the lock; fails on a
+  known advisory).
+
 ## [0.1.1] - 2026-03-28
 
 ### Fixed

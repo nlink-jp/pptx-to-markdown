@@ -78,7 +78,10 @@ uv run pptx2md input.pptx --no-charts
 uv sync
 
 # テスト実行
-uv run pytest
+make test
+
+# ロックした依存の既知の勧告
+make vuln
 
 # カバレッジ付きテスト
 uv run pytest --cov=pptx_to_markdown

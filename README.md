@@ -78,7 +78,10 @@ Chart type names follow python-pptx's `XL_CHART_TYPE` enum (e.g. `COLUMN_CLUSTER
 uv sync
 
 # Run tests
-uv run pytest
+make test
+
+# Known advisories in the locked dependencies
+make vuln
 
 # Run tests with coverage
 uv run pytest --cov=pptx_to_markdown
