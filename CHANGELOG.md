@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Security
+
+- The locked dependency versions are upgraded. `uv audit` reported 64 known
+  advisories in the previous lock, all in transitive packages; the new lock
+  has none. This affects environments made with `uv sync` from the
+  repository.
+
 ## [0.1.1] - 2026-03-28
 
 ### Fixed
