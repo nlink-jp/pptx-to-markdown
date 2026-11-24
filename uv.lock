@@ -397,7 +397,7 @@ wheels = [
 
 [[package]]
 name = "pptx-to-markdown"
-version = "0.1.1"
+version = "0.1.2"
 source = { editable = "." }
 dependencies = [
     { name = "click" },
