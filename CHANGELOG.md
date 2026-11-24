@@ -14,6 +14,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   has none. This affects environments made with `uv sync` from the
   repository.
 
+### Fixed
+
+- `pptx_to_markdown.__version__` reported 0.1.0 after the 0.1.1 release; a
+  test now compares it with the installed package's version.
+
 ### Changed
 
 - A `Makefile` with `test` and `vuln` (`uv audit` on the lock; fails on a
